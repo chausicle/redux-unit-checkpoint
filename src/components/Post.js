@@ -7,32 +7,25 @@ import {
   CardTitle,
   CardSubtitle,
   Row,
-  Col,
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input
+  Col
 } from 'reactstrap'
 import FaArrowUp from 'react-icons/lib/fa/arrow-up'
 import FaArrowDown from 'react-icons/lib/fa/arrow-down'
 import FaComment from 'react-icons/lib/fa/comment'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { upvotePost, downvotePost } from '../redux/actions/posts'
+import {
+  upvotePost,
+  downvotePost
+} from '../redux/actions/posts'
+import { createComment } from '../redux/actions/comments'
+import AddComment from './AddComment'
 
 const Post = props => {
-  console.log('props', props);
   let { id, title, author, content, createdAt, votes, img_url } = props.post
-  console.log(props.post);
-
-  const handleUpvote = (postId) => {
-    props.upvotePost(postId)
-  }
-
-  const handleDownvote = (postId) => {
-    props.downvotePost(postId)
-  }
+  // console.log('props function', props);
+  // console.log(props.post);
+  // console.log('5 Post Component');
 
   return (
     <Row className="mt-3">
@@ -46,7 +39,7 @@ const Post = props => {
           />
           <CardBody>
             <CardTitle>
-              {title} | <FaArrowUp onClick={() => handleUpvote(id)} /> {votes} {votes > 0 && <FaArrowDown onClick={() => handleDownvote(id)} />}
+              {title} | <FaArrowUp onClick={() => props.upvotePost(id)} /> {votes} {votes > 0 && <FaArrowDown onClick={() => props.downvotePost(id)} />}
             </CardTitle>
           <CardSubtitle>{author}</CardSubtitle>
             <CardText>
@@ -54,15 +47,10 @@ const Post = props => {
             </CardText>
               <hr />
             {createdAt} | <FaComment /> {' '}{props.comments.length}{' '} {props.comments.length !== 1 ? 'Comments' : 'Comment'}
-              <Form inline>
-                <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                  <Input type="text" name="comment" id="comment-field" placeholder="Enter a comment here" />
-                </FormGroup>
-                <Button>Submit</Button>
-              </Form>
-              <ul className="mt-2">
-                {props.comments.map(comment => <li key={comment.id}>{comment.content}</li>)}
-              </ul>
+            <AddComment postId={id}/>
+            <ul className="mt-2">
+              {props.comments.map(comment => <li key={comment.id}>{comment.content}</li>)}
+            </ul>
           </CardBody>
         </Card>
       </Col>
@@ -71,10 +59,15 @@ const Post = props => {
 }
 
 const mapStateToProps = (state, props) => {
+  // console.log("i'm here = ", state.comments);
+  // console.log('state', state);
+  // console.log('props', props);
+  // console.log('2 mapStateToProps in Post Component');
   return {
-  comments: state.comments.filter(comment => comment.post_id === props.id)
-}}
+  comments: state.comments.filter(comment => comment.post_id === props.post.id)
+  }
+}
 
-const mapDispatchToProps = dispatch => bindActionCreators({ upvotePost, downvotePost }, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({ upvotePost, downvotePost, createComment }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post)
