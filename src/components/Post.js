@@ -14,6 +14,7 @@ import FaArrowDown from 'react-icons/lib/fa/arrow-down'
 import FaComment from 'react-icons/lib/fa/comment'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import Moment from 'react-moment'
 import {
   upvotePost,
   downvotePost
@@ -43,7 +44,7 @@ const Post = props => {
               {content}
             </CardText>
               <hr />
-            {createdAt} | <FaComment /> {' '}{props.comments.length}{' '} {props.comments.length !== 1 ? 'Comments' : 'Comment'}
+            <Moment fromNow ago>{createdAt}</Moment> ago | <FaComment /> {' '}{props.comments.length}{' '} {props.comments.length !== 1 ? 'Comments' : 'Comment'}
             <AddComment postId={id}/>
             <ul className="mt-2">
               {props.comments.map(comment => <li key={comment.id}>{comment.content}</li>)}
