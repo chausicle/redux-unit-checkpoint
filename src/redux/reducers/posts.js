@@ -21,23 +21,20 @@ export default (state = initialState, { type, payload }) => {
       return [...state, payload]
     case CREATE_POSTS_FAILED:
       return payload
-    case UPVOTE_POST_SUCCESS:{
-      console.log('4 posts.js in reducers');
+    case UPVOTE_POST_SUCCESS:
       // const post = state.find(post => post.id === payload.id)
       // const index = state.indexOf(post)
       // return [...state.slice(0, index), payload, ...state.slice(index + 1)]
-      let filteredState = state.filter(post => post.id !== payload.id)
-      return [...filteredState, payload].sort((a, b) => b.votes - a.votes)
-    }
+      let filteredUpvoteState = state.filter(post => post.id !== payload.id)
+      return [...filteredUpvoteState, payload].sort((a, b) => b.votes - a.votes)
     case UPVOTE_POST_FAILED:
       return payload
-    case DOWNVOTE_POST_SUCCESS:{
+    case DOWNVOTE_POST_SUCCESS:
       // const post = state.find(post => post.id === payload.id)
       // const index = state.indexOf(post)
       // return [...state.slice(0, index), payload, ...state.slice(index + 1)]
-      let filteredState = state.filter(post => post.id !== payload.id)
-      return [...filteredState, payload].sort((a, b) => b.votes - a.votes)
-    }
+      let filteredDownvoteState = state.filter(post => post.id !== payload.id)
+      return [...filteredDownvoteState, payload].sort((a, b) => b.votes - a.votes)
     case DOWNVOTE_POST_FAILED:
       return payload
     default:

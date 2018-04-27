@@ -5,11 +5,6 @@ import { connect } from 'react-redux'
 import { filterByTitle } from '../redux/actions/filter'
 
 class FilterPosts extends Component {
-  handleFilterByTitle = (e) => {
-    console.log(e.target.value);
-    this.props.filterByTitle(e.target.value)
-  }
-
   render () {
     return (
       <Form inline>
@@ -19,7 +14,7 @@ class FilterPosts extends Component {
             type="text"
             name="email"
             id="filter-field"
-            onChange={this.handleFilterByTitle}
+            onChange={e => this.props.filterByTitle(e.target.value)}
           />
         </FormGroup>
       </Form>

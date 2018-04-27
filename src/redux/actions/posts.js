@@ -56,7 +56,6 @@ export const createPost = newPost => {
 }
 
 export const upvotePost = post_id => {
-  console.log('3 upvotePost in actions');
   return async dispatch => {
     try {
       let response = await fetch(`${BASE_URL}/posts/votes/increase/${post_id}`)

@@ -11,7 +11,6 @@ export const fetchComments = () => {
     try {
       let response = await fetch(`${BASE_URL}/comments`)
       let comments = await response.json()
-      console.log(comments);
       dispatch({
         type: FETCH_COMMENTS_SUCCESS,
         payload: comments
