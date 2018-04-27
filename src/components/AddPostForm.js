@@ -7,16 +7,35 @@ import { connect } from 'react-redux'
 class AddPostForm extends Component {
   state = {
     title: "",
-    body: "",
+    content: "",
     author: "",
     img_url: ""
   }
 
   handleSubmit = e => {
     e.preventDefault()
-    if (this.state.title && this.state.body && this.state.author && this.state.img_url) {
+    if (this.state.title && this.state.content && this.state.author && this.state.img_url) {
       this.props.createPost(this.state)
       this.props.toggleForm()
+    }
+  }
+
+  handleFocus = e => {
+    if (!e.target.value) e.target.style.boxShadow = '0 0 5px red'
+    else e.target.style.boxShadow = '0 0 5px green'
+    switch(e.target.name) {
+      case 'title':
+        this.setState({ title: e.target.value })
+        break;
+      case 'body':
+        this.setState({ content: e.target.value })
+        break;
+      case 'author':
+        this.setState({ author: e.target.value })
+        break;
+      case 'image':
+        this.setState({ img_url: e.target.value })
+        break;
     }
   }
 
@@ -31,7 +50,8 @@ class AddPostForm extends Component {
               type="text"
               name="title"
               id="title-field"
-              onChange={e => this.setState({ title: e.target.value })}
+              onChange={this.handleFocus}
+              onFocus={this.handleFocus}
             />
             </FormGroup>
             <FormGroup>
@@ -40,7 +60,9 @@ class AddPostForm extends Component {
                 type="text"
                 name="body"
                 id="body-field"
-                onChange={e => this.setState({ body: e.target.value })}/>
+                onChange={this.handleFocus}
+                onFocus={this.handleFocus}
+              />
             </FormGroup>
             <FormGroup>
               <Label for="author-field">Author</Label>
@@ -48,7 +70,9 @@ class AddPostForm extends Component {
                 type="text"
                 name="author"
                 id="author-field"
-                onChange={e => this.setState({ author: e.target.value })}/>
+                onChange={this.handleFocus}
+                onFocus={this.handleFocus}
+              />
             </FormGroup>
             <FormGroup>
               <Label for="image-field">Image URL</Label>
@@ -56,7 +80,9 @@ class AddPostForm extends Component {
                 type="text"
                 name="image"
                 id="image-field"
-                onChange={e => this.setState({ img_url: e.target.value })}/>
+                onChange={this.handleFocus}
+                onFocus={this.handleFocus}
+              />
             </FormGroup>
             <Button type="submit">Submit</Button>
           </Form>

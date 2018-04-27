@@ -23,9 +23,6 @@ import AddComment from './AddComment'
 
 const Post = props => {
   let { id, title, author, content, createdAt, votes, img_url } = props.post
-  // console.log('props function', props);
-  // console.log(props.post);
-  // console.log('5 Post Component');
 
   return (
     <Row className="mt-3">
@@ -59,12 +56,8 @@ const Post = props => {
 }
 
 const mapStateToProps = (state, props) => {
-  // console.log("i'm here = ", state.comments);
-  // console.log('state', state);
-  // console.log('props', props);
-  // console.log('2 mapStateToProps in Post Component');
   return {
-  comments: state.comments.filter(comment => comment.post_id === props.post.id)
+    comments: state.comments.filter(comment => comment.post_id === props.post.id)
   }
 }
 
